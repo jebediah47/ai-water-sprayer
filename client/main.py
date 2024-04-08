@@ -24,7 +24,8 @@ if __name__ == "__main__":
 
     while True:
         ret, frame = video_capture.read()
-        small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+        resize_factor = 0.75
+        small_frame = cv2.resize(frame, (0, 0), fx=resize_factor, fy=resize_factor)
         rgb_small_frame = np.ascontiguousarray(small_frame[:, :, ::-1])
 
         if process_this_frame:
@@ -49,11 +50,12 @@ if __name__ == "__main__":
 
         process_this_frame = not process_this_frame
 
+        scale_factor = 1 / resize_factor
         for (top, right, bottom, left), name in zip(face_locations, face_names):
-            top *= 4
-            right *= 4
-            bottom *= 4
-            left *= 4
+            top = int(top * scale_factor)
+            right = int(right * scale_factor)
+            bottom = int(bottom * scale_factor)
+            left = int(left * scale_factor)
 
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 

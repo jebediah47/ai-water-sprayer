@@ -1,0 +1,5 @@
+face-recognition
+numpy
+opencv-python
+tqdm
+
